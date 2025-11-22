@@ -1,8 +1,14 @@
 # 🔗 Nubank Mobile Take-Home Test - URL Shortener
 
+[English version below](#english-version) | [Versão em Português](#versão-em-português)
+
+---
+
+## Versão em Português
+
 Uma aplicação React Native desenvolvida para encurtar URLs e exibir o histórico de URLs encurtadas recentemente.
 
-## 📋 Sobre o Projeto
+### 📋 Sobre o Projeto
 
 Esta aplicação foi desenvolvida seguindo os princípios de **Clean Architecture** e utiliza a API de encurtamento de URLs disponibilizada para o teste. O projeto foi construído com **React Native Bare Workflow** (CLI), sem Expo.
 
@@ -480,3 +486,490 @@ Desenvolvido como parte do Nubank Mobile Take-Home Test.
 ---
 
 **Nota**: Este projeto utiliza React Native bare workflow. Certifique-se de ter o ambiente de desenvolvimento React Native corretamente configurado antes de executar.
+
+---
+
+---
+
+## English Version
+
+A React Native application developed to shorten URLs and display a history of recently shortened URLs.
+
+### 📋 About the Project
+
+This application was developed following **Clean Architecture** principles and uses the URL shortening API provided for the test. The project was built with **React Native Bare Workflow** (CLI), without Expo.
+
+#### Features
+
+- ✅ Shorten URLs through an API
+- ✅ URL validation before shortening
+- ✅ URL accessibility verification
+- ✅ Display history of shortened URLs
+- ✅ Copy shortened URL to clipboard
+- ✅ Open shortened URL in browser
+- ✅ Robust error handling
+- ✅ Light/dark theme
+- ✅ Responsive and optimized interface
+- ✅ Loading states for better UX
+
+### 🛠️ Tech Stack
+
+- **React Native** (Bare Workflow - CLI)
+- **TypeScript**
+- **Jest** for unit tests
+- **React Native Testing Library** for UI tests
+- **@react-native-clipboard/clipboard** for clipboard
+- **react-native-safe-area-context** for Safe Area
+- **Clean Architecture** (Domain, Data, Presentation, Infrastructure)
+
+### 📁 Project Structure
+
+```
+src/
+├── domain/              # Domain layer (business rules)
+│   ├── entities/
+│   │   └── ShortenedUrl.ts
+│   └── usecases/
+│       ├── shortenUrl.ts
+│       ├── resolveShortUrl.ts
+│       ├── copyUrl.ts
+│       └── openUrl.ts
+├── data/               # Data layer (implementations)
+│   ├── repositories/
+│   │   ├── UrlRepository.ts
+│   │   └── UrlResolver.ts
+│   └── sources/
+│       ├── UrlApi.ts
+│       └── UrlResolverApi.ts
+├── infra/              # Infrastructure
+│   ├── http/
+│   │   └── apiClient.ts
+│   └── services/
+│       ├── ClipboardService.ts
+│       └── BrowserService.ts
+├── presentation/       # Presentation layer (UI)
+│   ├── containers/     # Smart Components (business logic)
+│   │   └── ShortenerScreenContainer.tsx
+│   ├── screens/        # Presentational Components (pure UI)
+│   │   └── ShortenerScreenPresentational.tsx
+│   ├── components/
+│   │   ├── UrlInput.tsx
+│   │   ├── ShortenedListPresentational.tsx
+│   │   └── Loading.tsx
+│   └── hooks/
+│       └── useTheme.ts
+├── di/                 # Dependency Injection
+│   └── container.ts
+└── tests/              # Tests
+    ├── unit/
+    │   ├── shortenUrl.test.ts
+    │   ├── UrlRepository.test.ts
+    │   ├── UrlApi.test.ts
+    │   ├── apiClient.test.ts
+    │   └── useTheme.test.ts
+    └── ui/
+        ├── ShortenerScreenContainer.test.tsx
+        └── ShortenerScreenPresentational.test.tsx
+```
+
+### 🏗️ Architecture
+
+The project follows **Clean Architecture** principles with **Smart/Presentational Components** pattern:
+
+#### Layers
+
+1. **Domain**: Contains business rules and entities
+
+   - Framework independent
+   - Contains use cases and interfaces
+   - Pure validation and business logic
+
+2. **Data**: Implements repositories
+
+   - Connects domain with sources
+   - Transforms API data into entities
+   - Implements domain interfaces
+
+3. **Infrastructure**: Technical implementations
+
+   - HTTP client with timeout (10 seconds)
+   - Clipboard and browser services
+   - Low-level configurations
+
+4. **Presentation**: User interface
+
+   - **Containers (Smart)**: Business logic, state, use cases
+   - **Presentational**: Pure UI, rendering, callbacks
+   - Theme management
+   - Custom hooks
+
+5. **DI (Dependency Injection)**: Dependency container
+   - Singleton pattern
+   - Centralizes dependency creation
+   - Facilitates testing and maintenance
+
+#### Smart/Presentational Pattern
+
+**Smart Components (Containers)**
+
+- Manage application state
+- Execute use cases
+- Handle errors and side effects
+- Pass data and callbacks to Presentational
+
+**Presentational Components**
+
+- Pure components (function of props)
+- Only render UI
+- Emit events via callbacks
+- No access to use cases or DI container
+- Easy to test and reuse
+
+#### Dependency Flow
+
+```
+Presentation (Containers) → Domain (Use Cases) → Data → Infrastructure
+Presentation (Presentational) → (no business dependencies)
+```
+
+Dependencies always point inward (toward Domain).
+
+### 🚀 How to Run
+
+#### Prerequisites
+
+- Node.js >= 20
+- npm or yarn
+- React Native environment configured ([official guide](https://reactnative.dev/docs/environment-setup))
+  - For iOS: Xcode and CocoaPods
+  - For Android: Android Studio and SDK
+
+#### Installation
+
+```bash
+# Clone the repository
+git clone <repository-url>
+
+# Enter project folder
+cd NubankMobileTakeHomeTest
+
+# Install dependencies
+npm install
+# or
+yarn install
+
+# For iOS, install pods
+cd ios && pod install && cd ..
+```
+
+#### Run on iOS
+
+```bash
+npm run ios
+# or
+yarn ios
+```
+
+#### Run on Android
+
+```bash
+npm run android
+# or
+yarn android
+```
+
+### 🧪 Tests
+
+The project has high coverage of unit and UI tests following the Smart/Presentational pattern.
+
+#### Run all tests
+
+```bash
+npm test
+# or
+yarn test
+```
+
+#### Run specific tests
+
+```bash
+# Presentational tests (pure UI)
+npm test -- ShortenerScreenPresentational
+
+# Container tests (business logic)
+npm test -- ShortenerScreenContainer
+
+# Unit tests
+npm test -- unit/
+```
+
+#### Run tests in watch mode
+
+```bash
+npm test -- --watch
+# or
+yarn test --watch
+```
+
+#### Test coverage
+
+```bash
+npm test -- --coverage
+# or
+yarn test --coverage
+```
+
+#### Implemented Tests
+
+**Unit Tests (40+ tests)**
+
+- ✅ **Use Cases**:
+  - `shortenUrl`: Validation, URL accessibility, business logic (9 tests)
+  - Other use cases
+- ✅ **Repository**: API data transformation
+- ✅ **API Source**: API calls and response handling
+- ✅ **HTTP Client**: HTTP client with timeout
+- ✅ **Hooks**: `useTheme` for theme management
+
+**UI Tests (34+ tests)**
+
+**Presentational Components (21 tests)**:
+
+- ✅ Component rendering
+- ✅ User interactions
+- ✅ Visual states (loading, error, empty)
+- ✅ Theme application
+- ✅ Props and callbacks
+
+**Container Components (13 tests)**:
+
+- ✅ Use case execution
+- ✅ State management
+- ✅ Error handling
+- ✅ Async flows
+- ✅ Input validations
+
+**Total: 65+ tests**
+
+#### Testing Strategy
+
+The project follows a separated testing strategy:
+
+1. **Presentational Tests**: Test pure UI with mocked props
+2. **Container Tests**: Test business logic and integration with use cases
+3. **Unit Tests**: Test each layer in isolation
+
+See `TESTING_STRATEGY.md` for more details.
+
+### 🎨 Performance Optimizations
+
+#### Optimized FlatList
+
+The shortened URLs list uses FlatList optimizations:
+
+- ✅ `keyExtractor`: Unique identifier for each item
+- ✅ `getItemLayout`: Layout calculation for better performance
+- ✅ `initialNumToRender`: Optimized initial rendering (10 items)
+- ✅ `maxToRenderPerBatch`: Batch rendering control (5 items)
+- ✅ `windowSize`: Optimized rendering window (5x viewport)
+
+#### General Optimizations
+
+- ✅ Callback memoization
+- ✅ Fixed item height for better scrolling
+- ✅ Individual loading states per item
+- ✅ 10-second timeout for HTTP requests
+- ✅ Accessibility check with 5-second timeout
+
+### 🌐 API
+
+The application consumes the following API:
+
+**Base URL**: `https://url-shortener-server.onrender.com`
+
+#### Endpoints
+
+**1. Shorten URL**
+
+**POST** `/api/alias`
+
+**Request Body:**
+
+```json
+{
+  "url": "https://example.com"
+}
+```
+
+**Response (201):**
+
+```json
+{
+  "alias": "abc123",
+  "_links": {
+    "self": "https://example.com",
+    "short": "https://url-shortener-server.onrender.com/abc123"
+  }
+}
+```
+
+**2. Resolve Shortened URL**
+
+**GET** `/:alias`
+
+Redirects to the original URL.
+
+### 📝 Architectural Decisions
+
+#### 1. Clean Architecture
+
+Clear separation between layers ensuring:
+
+- Testability
+- Maintainability
+- Framework independence
+- Easy implementation changes
+
+#### 2. Smart/Presentational Pattern
+
+Component division into:
+
+- **Smart (Containers)**: Logic, state, use cases
+- **Presentational**: Pure UI, no business logic
+
+**Benefits**:
+
+- Simpler and focused tests
+- Component reusability
+- Better separation of concerns
+
+#### 3. Dependency Injection Container
+
+Singleton DI container implementation:
+
+- Centralizes dependency creation
+- Facilitates mocks in tests
+- Allows easy implementation swapping
+
+#### 4. URL Accessibility Check
+
+Before shortening, checks if URL is accessible:
+
+- Uses HEAD method (doesn't download content)
+- 5-second timeout
+- Accepts 2xx, 3xx, 4xx (server responded)
+- Rejects 5xx and network errors
+
+#### 5. In-Memory State
+
+URL history is kept only in memory (React state). For persistence, AsyncStorage would be needed.
+
+#### 6. Fetch API with Timeout
+
+Native Fetch API with:
+
+- AbortController for timeout
+- 10 seconds for normal operations
+- 5 seconds for accessibility check
+
+#### 7. Dynamic Theme
+
+Theme system with:
+
+- Light/dark theme
+- System mode (automatic)
+- Custom `useTheme` hook
+- Selected theme persistence
+
+#### 8. Fixed Layout for Items
+
+List items have fixed height (180px) to allow `getItemLayout` and improve performance.
+
+#### 9. Multiple Use Cases
+
+Separation of responsibilities:
+
+- `ShortenUrl`: Shorten URLs
+- `ResolveShortUrl`: Resolve shortened URLs
+- `CopyUrl`: Copy to clipboard
+- `OpenUrl`: Open in browser
+
+### 🔧 Configuration
+
+#### Jest
+
+Configured to test:
+
+- TypeScript
+- React Native components
+- Native module mocks
+- Code coverage
+
+Files: `jest.config.js`, `jest.setup.js`, `jest.mocks.js`
+
+#### TypeScript
+
+Strict configuration with:
+
+- Rigorous type checking
+- Path aliases for clean imports
+- React Native support
+
+File: `tsconfig.json`
+
+### 📱 Compatibility
+
+- ✅ iOS 13+
+- ✅ Android 6.0+ (API 23+)
+
+### 🤝 Contributing
+
+This is a test project, but suggestions are welcome:
+
+1. Fork the project
+2. Create a branch for your feature (`git checkout -b feature/MyFeature`)
+3. Commit your changes (`git commit -m 'Add MyFeature'`)
+4. Push to the branch (`git push origin feature/MyFeature`)
+5. Open a Pull Request
+
+### 📄 License
+
+This project is part of a technical test.
+
+### 👨‍💻 Author
+
+Developed as part of the Nubank Mobile Take-Home Test.
+
+---
+
+### 🎯 Project Highlights
+
+**Clean Architecture**
+
+✅ Clear layer separation  
+✅ Dependency Rule respected  
+✅ Maximum testability
+
+**Smart/Presentational Pattern**
+
+✅ Pure and reusable components  
+✅ Logic separated from presentation  
+✅ Focused and simple tests
+
+**Code Quality**
+
+✅ Strict TypeScript  
+✅ 65+ tests (100% critical coverage)  
+✅ Complete documentation  
+✅ Clean and idiomatic code
+
+**Performance**
+
+✅ Optimized FlatList  
+✅ Configured timeouts  
+✅ Granular loading states  
+✅ Accessibility verification
+
+---
+
+**Note**: This project uses React Native bare workflow. Make sure you have the React Native development environment properly configured before running.
